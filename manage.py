@@ -24,7 +24,7 @@ def test():
 
 
 @manager.command
-def adduser(email, username, password=None, admin=False):
+def adduser(email, password=None, admin=False):
     """Register a new user."""
     if not password:
         from getpass import getpass
@@ -34,11 +34,10 @@ def adduser(email, username, password=None, admin=False):
             import sys
             sys.exit('Error: passwords do not match.')
     db.create_all()
-    user = User(email=email, username=username, password=password,
-                is_admin=admin)
+    user = User(email=email, password=password, is_admin=admin)
     db.session.add(user)
     db.session.commit()
-    print('User {0} was registered successfully.'.format(username))
+    print('User {0} was registered successfully.'.format(email))
 
 
 @manager.command
