@@ -1,12 +1,6 @@
 from flask_restplus import fields
 from .restplus import api
 
-get_users = api.model('Get Users Model', {
-                'id': fields.Integer(description='id'),
-                'email': fields.String(description='email'),
-                'is_admin': fields.Boolean(description='user is admin')
-            })
-
 create_user = api.model('Create User Model', {
         'email': fields.String(required=True, description='email'),
         'password': fields.String(required=True, description='password'),

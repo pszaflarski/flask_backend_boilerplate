@@ -23,7 +23,7 @@ class UserCollection(Resource):
         Returns list of Users.
         """
         users = User.query.all()
-        return api.marshal(users, get_users)
+        return api.marshal(users, get_user)
 
     @api.doc(security='apiKey')
     @api.response(201, 'User successfully created.')
