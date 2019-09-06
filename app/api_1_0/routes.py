@@ -16,7 +16,7 @@ ns_user = api.namespace('user', description='Operations related to User Manageme
 @ns_user.route('/')
 class UserCollection(Resource):
 
-    @api.doc(security='apiKey')
+    @api.doc(security='apiKey', model=get_user)
     @admin_token_required
     def get(self):
         """
@@ -48,7 +48,7 @@ class UserCollection(Resource):
 @api.response(404, 'User not found.')
 class UserItem(Resource):
 
-    @api.doc(security='apiKey')
+    @api.doc(security='apiKey', model=get_user)
     @admin_token_required
     def get(self, id):
         """
