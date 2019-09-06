@@ -59,7 +59,7 @@ def admin_token_required(func):
         else:
             return {'message': 'invalid token'}, 401
         if not user.is_admin:
-            return {'message': 'admin access required'}, 401
+            return {'message': 'admin access required'}, 403
         return func(*args, **kwargs)
 
     return decorated
