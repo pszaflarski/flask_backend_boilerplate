@@ -74,7 +74,7 @@ class UserItem(Resource):
         db.session.commit()
         return {"message": f"User {id} updated"}, 200
 
-    @api.response(200, 'Category successfully deleted.')
+    @api.response(200, 'User successfully deleted.')
     def delete(self, id):
         """
         Deletes a user.
