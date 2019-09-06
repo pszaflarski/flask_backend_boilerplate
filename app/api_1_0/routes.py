@@ -71,6 +71,7 @@ class UserItem(Resource):
         data = request.json
         user.email = data.get('email', user.email)
         user.is_admin = data.get('is_admin', user.is_admin)
+        db.session.commit()
         return {"message": f"User {id} updated"}, 204
 
     @api.response(204, 'Category successfully deleted.')
@@ -78,7 +79,11 @@ class UserItem(Resource):
         """
         Deletes a user.
         """
-        # delete_user(id)
+        user = User.query.get(id)
+        if not user:
+            return {'message': 'user not found'}, 404
+        user.delete()
+        db.session.commit()
         return {"message": f"User {id} deleted"}, 204
 
 
