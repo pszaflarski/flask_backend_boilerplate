@@ -60,7 +60,7 @@ class UserItem(Resource):
         return api.marshal(user, get_user)
 
     @api.expect(update_user)
-    @api.response(204, 'User successfully updated.')
+    @api.response(200, 'User successfully updated.')
     def patch(self, id):
         """
         Update a user
@@ -72,9 +72,9 @@ class UserItem(Resource):
         user.email = data.get('email', user.email)
         user.is_admin = data.get('is_admin', user.is_admin)
         db.session.commit()
-        return {"message": f"User {id} updated"}, 204
+        return {"message": f"User {id} updated"}, 200
 
-    @api.response(204, 'Category successfully deleted.')
+    @api.response(200, 'Category successfully deleted.')
     def delete(self, id):
         """
         Deletes a user.
@@ -84,7 +84,7 @@ class UserItem(Resource):
             return {'message': 'user not found'}, 404
         user.delete()
         db.session.commit()
-        return {"message": f"User {id} deleted"}, 204
+        return {"message": f"User {id} deleted"}, 200
 
 
 @ns_user.route('/token')
