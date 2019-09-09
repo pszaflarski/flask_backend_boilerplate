@@ -59,6 +59,7 @@ class UserItem(Resource):
             return {'message': 'user not found'}, 404
         return api.marshal(user, get_user)
 
+    @api.doc(security='apiKey')
     @api.expect(update_user)
     @api.response(200, 'User successfully updated.')
     @admin_token_required
@@ -75,6 +76,7 @@ class UserItem(Resource):
         db.session.commit()
         return {"message": f"User {id} updated"}, 200
 
+    @api.doc(security='apiKey')
     @api.response(200, 'User successfully deleted.')
     @admin_token_required
     def delete(self, id):
