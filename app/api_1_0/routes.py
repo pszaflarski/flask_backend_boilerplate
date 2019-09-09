@@ -4,7 +4,7 @@ from flask import request
 from flask_restplus import Resource
 
 from .restplus import api, admin_token_required
-from .serializers import get_user, create_user, get_users, update_user, user_token
+from .serializers import get_user, create_user, update_user, user_token
 from .. import db
 from ..models import User
 
@@ -61,6 +61,7 @@ class UserItem(Resource):
 
     @api.expect(update_user)
     @api.response(200, 'User successfully updated.')
+    @admin_token_required
     def patch(self, id):
         """
         Update a user
@@ -75,6 +76,7 @@ class UserItem(Resource):
         return {"message": f"User {id} updated"}, 200
 
     @api.response(200, 'User successfully deleted.')
+    @admin_token_required
     def delete(self, id):
         """
         Deletes a user.

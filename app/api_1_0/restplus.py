@@ -45,6 +45,7 @@ def token_required(func):
 
     return decorated
 
+
 def admin_token_required(func):
     # this can probably combined with token_required
     @wraps(func)
