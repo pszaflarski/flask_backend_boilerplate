@@ -86,7 +86,7 @@ class UserItem(Resource):
         user = User.query.get(id)
         if not user:
             return {'message': 'user not found'}, 404
-        user.delete()
+        db.session.delete(user)
         db.session.commit()
         return {"message": f"User {id} deleted"}, 200
 
