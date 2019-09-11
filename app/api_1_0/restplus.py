@@ -3,7 +3,7 @@ import traceback
 from functools import wraps
 
 from flask import current_app, request
-from flask_login import login_user
+from flask_login import login_user, current_user
 from flask_restplus import Api
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -40,26 +40,16 @@ def token_required(func):
             log.debug('User token validated')
         else:
             return {'message': 'invalid token'}, 401
-
         return func(*args, **kwargs)
 
     return decorated
 
 
 def admin_token_required(func):
-    # this can probably combined with token_required
+    @token_required
     @wraps(func)
     def decorated(*args, **kwargs):
-        token = request.headers.get('X-API-KEY')
-        if not token:
-            return {'message': 'token is missing'}, 401
-        user = User.validate_api_token(token)
-        if user:
-            login_user(user)
-            log.debug('User token validated')
-        else:
-            return {'message': 'invalid token'}, 401
-        if not user.is_admin:
+        if not current_user.is_admin:
             return {'message': 'admin access required'}, 403
         return func(*args, **kwargs)
 
