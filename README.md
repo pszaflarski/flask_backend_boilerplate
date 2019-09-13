@@ -16,16 +16,12 @@ Now Install dependencies
 
     pip install -r requirements.txt
     
-Set up a default admin account using the create.sh script
-
-    bash create.sh
 Now run the app
 
     bash env.sh
   Now you can go to [http://127.0.0.1:5000/api/](http://127.0.0.1:5000/api/) and see Swagger running
 
-You can issue yourself an API token by using the only route that does not require authentication in Swagger and using the default admin username and password (you can see this in the create.sh file)
+You can issue yourself an API token by using the only route that does not require authentication in Swagger and using the default admin username and password (you can see this in the env.sh file and the app.yaml file)
 
-    python manage.py adduser --admin admin@example.com --password Abcd1234!
-
-
+    ROOT_USER=admin@example.com
+    ROOT_PASSWORD=Abcd1234!
