@@ -5,6 +5,8 @@ env_variables:
   FLASK_CONFIG: 'production'
   FLASK_DEBUG: 0
   SECRET_KEY: 'imsorandom'
+  ROOT_USER: 'admin@example.com'
+  ROOT_PASSWORD: 'Abcd1234!'
 
 entrypoint: gunicorn -b :$PORT manage:app
 
