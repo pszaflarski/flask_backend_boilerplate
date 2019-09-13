@@ -19,24 +19,7 @@ manager = Manager(app)
 
 @app.before_first_request
 def setup():
-    # as in model.py, this can be removed in production
-    # this only makes sure that a root account exists before you
-    # try and make a first request
-
-    # try:
     load_user(1)
-    # except TypeError:
-    #     # This block is probably not needed when you are going to production
-    #     # its only meant to set up a root account so that the app is usable for
-    #     # demo purposes
-    #     import os
-    #     db.create_all()
-    #     email = os.environ.get('ROOT_USER')
-    #     password = os.environ.get('ROOT_PASSWORD')
-    #     user = User(id=1, email=email, password=password, is_admin=True)
-    #     db.session.add(user)
-    #     db.session.commit()
-    #     load_user(1)
 
 
 @manager.command
