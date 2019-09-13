@@ -1,6 +1,6 @@
 
 # flask_backend_boilerplate
-Boilerplate for a flask backend with swagger and the app factory pattern ready Google App Engine
+Boilerplate for a flask backend with swagger and the app factory pattern and ready Google App Engine
 
 Set up a backend in Flask with Swagger and the App factory pattern without reading a whole bunch of contradictory stuff on Medium!
 
