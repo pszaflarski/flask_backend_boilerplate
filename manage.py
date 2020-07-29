@@ -17,10 +17,15 @@ app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 # print("ENVIRONMENT:{}".format(os.getenv('FLASK_CONFIG') or 'default'))
 manager = Manager(app)
 
+
+@app.before_first_request
+def setup():
+    load_user(1)
+
+
 # This is needed for some simple CORS stuff
 @app.after_request
 def cors_headers(response):
-
     cors_headers = {
         "Access-Control-Allow-Origin": request.headers.get('Origin', '*'),
         "Access-Control-Allow-Credentials": "true",
@@ -38,9 +43,6 @@ def cors_headers(response):
 
     return response
 
-@app.before_first_request
-def setup():
-    load_user(1)
 
 @manager.command
 def test():
