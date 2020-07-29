@@ -7,6 +7,7 @@ if os.path.exists('.env'):
             os.environ[var[0]] = var[1]
 
 from app import create_app
+from flask import request
 from flask_script import Manager
 from app import db
 from app.models import User
@@ -14,6 +15,27 @@ from app.models import User
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 # print("ENVIRONMENT:{}".format(os.getenv('FLASK_CONFIG') or 'default'))
 manager = Manager(app)
+
+# This is needed for some simple CORS stuff
+@app.after_request
+def cors_headers(response):
+
+    cors_headers = {
+        "Access-Control-Allow-Origin": request.headers.get('Origin', '*'),
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE",
+        "Access-Control-Allow-Headers": "X-API-KEY, Access-Control-Allow-Headers, Origin, Accept, "
+                                        "X-Requested-With, Content-Type, Access-Control-Request-Method, "
+                                        "Access-Control-Request-Headers, Authorization, headers, Access-Control-Allow-Origin"
+    }
+    for key, value in cors_headers.items():
+        response.headers[key] = value
+
+    # if request.method == 'OPTIONS':
+    #     # cors policy does not allow redirects on OPTIONS so always return 200
+    #     response.status_code = 200
+
+    return response
 
 @manager.command
 def test():
