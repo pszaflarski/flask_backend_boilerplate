@@ -22,7 +22,14 @@ authorizations = {
 api = Api(
     version='1.0',
     title='Boilerplate Flask Backend',
-    description='A starting point for apps using Flask, Swagger and the App Factory Pattern',
+    description="""A starting point for apps using Flask, Swagger and the App Factory Pattern.
+    See the source on github: https://github.com/pszaflarski/flask_backend_boilerplate
+    
+    If you are running the default configuration, you can use the root account to try this out:
+    ROOT_USER: admin@example.com
+    ROOT_PASSWORD: Abcd1234!
+    
+    Use the token endpoint (/api/user/token) to issue yourself a token for endpoints requiring auth""",
     security='Bearer Auth',
     authorizations=authorizations
 )

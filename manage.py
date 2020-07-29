@@ -1,4 +1,5 @@
 import os
+
 if os.path.exists('.env'):
     print('Importing environment from .env...')
     for line in open('.env'):
@@ -10,7 +11,7 @@ from app import create_app
 from flask import request
 from flask_script import Manager
 from app import db
-from app.models import User
+from app.models import User, load_user
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 # print("ENVIRONMENT:{}".format(os.getenv('FLASK_CONFIG') or 'default'))
@@ -36,6 +37,10 @@ def cors_headers(response):
     #     response.status_code = 200
 
     return response
+
+@app.before_first_request
+def setup():
+    load_user(1)
 
 @manager.command
 def test():
@@ -71,9 +76,11 @@ def removeuser(email):
     db.session.commit()
     print('User {0} was removed.'.format(eyed))
 
+
 @manager.command
 def dropall():
     db.drop_all()
+
 
 @manager.command
 def createall():
@@ -82,4 +89,3 @@ def createall():
 
 if __name__ == '__main__':
     manager.run()
-

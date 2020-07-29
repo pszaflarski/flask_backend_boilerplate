@@ -1,6 +1,7 @@
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy.exc import OperationalError
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import db, login_manager
@@ -54,7 +55,20 @@ class User(UserMixin, db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    try:
+        return User.query.get(int(user_id))
+    except OperationalError:
+        # This block is probably not needed when you are going to production
+        # its only meant to set up a root account so that the app is usable for
+        # demo purposes
+        import os
+        db.create_all()
+        email = os.environ.get('ROOT_USER')
+        password = os.environ.get('ROOT_PASSWORD')
+        user = User(id=1, email=email, password=password, is_admin=True)
+        db.session.add(user)
+        db.session.commit()
+        return User.query.get(int(user_id))
 
 # # Indexing
 # Index('user_id_idx', User.id)

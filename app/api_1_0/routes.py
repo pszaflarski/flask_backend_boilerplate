@@ -106,8 +106,10 @@ class TokenResource(Resource):
         ttl = data.get('ttl', 300)
         user = User.query.filter_by(email=email).first()
         if not user:
+            log.debug("User does not exist")
             return None, 401
         if not user.verify_password(password):
+            log.debug("Bad Password")
             return None, 401
         token = user.get_api_token(expiration=ttl)
         return {'X-API-KEY': token}, 200
